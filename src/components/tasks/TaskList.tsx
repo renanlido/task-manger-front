@@ -7,30 +7,17 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useTask } from "@/contexts/TaskContext";
-import { TaskStatus } from "@/types";
-import React, { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useUrlFilter } from "@/hooks/useUrlFilter";
+import React from "react";
 import { TaskItem } from "./TaskItem";
 
 export const TaskList: React.FC = () => {
-	const [searchParams, setSearchParams] = useSearchParams();
-
-	const filter = (searchParams.get("filter") as TaskStatus) || "all";
-
-	const { filteredTasks, setFilter } = useTask();
+	const { filteredTasks, setFilter, filter } = useTask();
+	const { updateFilterInUrl } = useUrlFilter({ setFilter });
 
 	const handleFilterChange = (value: string) => {
-		setSearchParams((params) => {
-			params.set("filter", value);
-			return params;
-		});
-
-		setFilter(value as TaskStatus);
+		updateFilterInUrl(value);
 	};
-
-	useEffect(() => {
-		setFilter(filter as TaskStatus);
-	}, [filter]);
 
 	return (
 		<Card className="w-full">
