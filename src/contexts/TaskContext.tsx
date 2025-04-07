@@ -11,7 +11,6 @@ import { useAuth } from "./AuthContext";
 interface TaskContextType {
 	tasks: Task[];
 	filteredTasks: Task[];
-	// filter: TaskStatus;
 	setFilter: (filter: TaskStatus) => void;
 	addTask: (title: string) => void;
 	toggleTaskStatus: (id: string) => void;
@@ -95,7 +94,6 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 			value={{
 				tasks,
 				filteredTasks,
-				// filter,
 				setFilter,
 				addTask,
 				toggleTaskStatus,
