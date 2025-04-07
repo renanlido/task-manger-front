@@ -26,8 +26,8 @@ Uma aplicação web para gerenciamento de tarefas pessoais, construída com Reac
 
 ```bash
 # Clonar o repositório
-git clone [url-do-repositorio]
-cd [nome-do-repositorio]
+git clone https://github.com/renanlido/taskmanager-frontend.git
+cd taskmanager-frontend
 
 # Instalar dependências
 yarn install
@@ -47,11 +47,7 @@ yarn preview
 O projeto inclui configurações Docker para facilitar a execução em diferentes ambientes. Ambos os serviços constroem a aplicação e a servem usando o pacote `serve` na porta 5173.
 
 ```bash
-# Construir e executar em modo de produção (serviço app-dev)
-docker-compose up app-dev
-
-# Construir e executar em modo de produção (serviço app-prod)
-docker-compose up app-prod
+docker-compose up
 ```
 
 ## Testes E2E
