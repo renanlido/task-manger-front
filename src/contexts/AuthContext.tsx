@@ -60,6 +60,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 	};
 
 	const logout = () => {
+		nookies.destroy(null, "token");
 		setUser(null);
 	};
 
@@ -70,7 +71,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 		// TODO: Salvar o usuário no contexto
 		// TODO: Retornar o usuário
 
-		console.log(token);
+		if (!token) {
+			return null;
+		}
 
 		return {
 			id: "1",
