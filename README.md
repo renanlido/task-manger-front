@@ -63,7 +63,7 @@ Este projeto utiliza Playwright para testes end-to-end. Os testes cobrem as prin
 - Bloqueio de acesso para rotas privadas sem autenticação
 - Validações de formulário
 
-Para executar os testes:
+### Executando os Testes
 
 ```bash
 # Instalar os navegadores necessários para o Playwright
@@ -77,6 +77,61 @@ yarn test:e2e:ui
 
 # Executar os testes em modo de depuração
 yarn test:e2e:debug
+
+# Executar testes específicos (exemplo: apenas testes de autenticação)
+yarn test:e2e --grep "Login"
+```
+
+### Desenvolvendo Testes E2E
+
+#### Estrutura de Testes
+
+Os testes estão organizados na pasta `e2e/` com a seguinte estrutura:
+
+```
+e2e/
+├── fixtures/       # Fixtures reutilizáveis para os testes
+├── tests/          # Testes organizados por funcionalidade
+│   ├── auth/       # Testes relacionados à autenticação
+│   └── tasks/      # Testes relacionados ao gerenciamento de tarefas
+```
+
+#### Boas Práticas para Testes E2E
+
+1. **Use data-testid para seletores**: Adicione atributos `data-testid` aos elementos que precisam ser testados.
+
+   ```tsx
+   <button data-testid="add-task-button">Adicionar Tarefa</button>
+   ```
+
+2. **Crie fixtures reutilizáveis**: Para configurações comuns como autenticação de usuário.
+
+3. **Isole os testes**: Cada teste deve ser independente e não depender do estado de outros testes.
+
+#### Testando Componentes do Radix UI
+
+Para componentes personalizados como os do Radix UI, é necessário uma abordagem diferente dos elementos HTML padrão:
+
+**Exemplo: Selecionando opções em um Select do Radix UI**
+
+```typescript
+// Incorreto (funciona apenas para elementos <select> HTML padrão)
+await page.getByTestId('task-filter').selectOption('pending');
+
+// Correto para componentes Select do Radix UI
+// 1. Clique no trigger para abrir o dropdown
+await page.getByTestId('task-filter').click();
+// 2. Clique na opção desejada
+await page.getByTestId('filter-pending').click();
+```
+
+**Exemplo: Interagindo com Dialog/Modal do Radix UI**
+
+```typescript
+// Abrir o modal
+await page.getByTestId('open-dialog-button').click();
+// Interagir com elementos dentro do modal
+await page.getByTestId('dialog-confirm-button').click();
 ```
 
 Para mais detalhes sobre os testes, consulte a [documentação de testes](./e2e/README.md).
