@@ -51,8 +51,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
 					checked={task.completed}
 					onCheckedChange={handleToggleStatus}
 					id={`task-${task.id}`}
-					data-testid={`task-checkbox-${task.id}`}
-					className="task-checkbox"
+					data-testid={`task-checkbox-${task.title.replace(/\s+/g, "-").toLowerCase()}`}
 				/>
 
 				{isEditing ? (
@@ -60,14 +59,14 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
 						value={editedTitle}
 						onChange={(e) => setEditedTitle(e.target.value)}
 						className="task-edit-input flex-1"
-						data-testid={`task-edit-input-${task.id}`}
+						data-testid={`task-edit-input-${task.title}`}
 						autoFocus
 					/>
 				) : (
 					<label
 						htmlFor={`task-${task.id}`}
-						className={`task-title flex-1 cursor-pointer ${task.completed ? "text-zinc-500 line-through" : ""}`}
-						data-testid={`task-title-${task.id}`}
+						className={`task-title flex-1 cursor-pointer ${task.completed ? "completed text-zinc-500 line-through" : "pending"}`}
+						data-testid={`task-item-${task.title.replace(/\s+/g, "-").toLowerCase()}`}
 					>
 						{task.title}
 					</label>
@@ -112,7 +111,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
 							variant="ghost"
 							size="icon"
 							onClick={handleDelete}
-							data-testid={`task-delete-${task.id}`}
+							data-testid={`task-delete-${task.title.replace(/\s+/g, "-").toLowerCase()}`}
 							className="task-delete-button"
 						>
 							<Trash2 className="h-4 w-4" />

@@ -59,7 +59,7 @@ export const TaskForm: React.FC = () => {
 											disabled={formState.isSubmitting}
 											{...field}
 										/>
-										<FormMessage />
+										<FormMessage data-testId="task-title-error" />
 									</div>
 								)}
 							/>
