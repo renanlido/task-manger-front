@@ -1,13 +1,21 @@
 import { CardFooter } from "@/components/ui/card";
 import { Form, FormField, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/contexts/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { z } from "zod";
 import { AuthCardContent } from "./AuthCardContent";
 import { AuthCardFooter } from "./AuthCardFooter";
 
 export const AuthRegisterContent = () => {
+	const { register } = useAuth();
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	const from = location.state?.from || { pathname: "/tasks" };
 	const registerSchema = z
 		.object({
 			name: z
@@ -62,6 +70,12 @@ export const AuthRegisterContent = () => {
 
 	const handleRegisterSubmit = async (data: z.infer<typeof registerSchema>) => {
 		console.log(data);
+		methods.reset();
+		toast.success("Conta criada com sucesso");
+
+		await register(data.name, data.email, data.password);
+
+		navigate(from, { replace: true });
 	};
 	return (
 		<Form {...methods}>

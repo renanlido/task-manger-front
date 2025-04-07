@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 import { AuthCardContent } from "./AuthCardContent";
@@ -13,6 +14,10 @@ import { AuthCardFooter } from "./AuthCardFooter";
 
 export const AuthLoginContent = () => {
 	const { login } = useAuth();
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	const from = location.state?.from || { pathname: "/tasks" };
 
 	const loginSchema = z.object({
 		email: z
@@ -43,7 +48,9 @@ export const AuthLoginContent = () => {
 		methods.reset();
 		toast.success("Login realizado com sucesso");
 
-		login(data.email, data.password);
+		await login(data.email, data.password);
+
+		navigate(from, { replace: true });
 	};
 
 	return (
