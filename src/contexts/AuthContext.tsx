@@ -63,16 +63,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 		setUser(null);
 	};
 
-	const validateSession = () => {
-		const { token } = nookies.get(null, "token");
-
-		if (!token) {
-			nookies.destroy(null, "token");
-			setUser(null);
-		}
-		return { token };
-	};
-
 	const parseToken = () => {
 		const { token } = validateSession();
 
@@ -87,6 +77,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 			name: "Usuário Teste",
 			email: "teste@teste.com",
 		};
+	};
+
+	const validateSession = () => {
+		const { token } = nookies.get(null, "token");
+
+		if (!token) {
+			nookies.destroy(null, "token");
+			setUser(null);
+		}
+		return { token };
 	};
 
 	const token = () => {
