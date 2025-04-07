@@ -1,52 +1,50 @@
-import React, { useState } from 'react';
-import { useTask } from '@/contexts/TaskContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useTask } from "@/contexts/TaskContext";
+import { Plus } from "lucide-react";
+import React, { useState } from "react";
 
-const TaskForm: React.FC = () => {
-  const { addTask } = useTask();
-  const [title, setTitle] = useState('');
-  const [error, setError] = useState<string | null>(null);
+export const TaskForm: React.FC = () => {
+	const { addTask } = useTask();
+	const [title, setTitle] = useState("");
+	const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		setError(null);
 
-    if (!title.trim()) {
-      setError('Por favor, insira um tu00edtulo para a tarefa');
-      return;
-    }
+		if (!title.trim()) {
+			setError("Por favor, insira um título para a tarefa");
+			return;
+		}
 
-    addTask(title.trim());
-    setTitle('');
-  };
+		addTask(title.trim());
+		setTitle("");
+	};
 
-  return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Nova Tarefa</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="flex gap-2">
-            <Input
-              placeholder="O que vocu00ea precisa fazer?"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="flex-1"
-            />
-            <Button type="submit">
-              <Plus className="h-4 w-4 mr-2" />
-              Adicionar
-            </Button>
-          </div>
-          {error && <p className="text-sm text-red-500">{error}</p>}
-        </form>
-      </CardContent>
-    </Card>
-  );
+	return (
+		<Card className="w-full">
+			<CardHeader>
+				<CardTitle>Nova Tarefa</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+					<div className="flex gap-2">
+						<Input
+							placeholder="O que você precisa fazer?"
+							value={title}
+							onChange={(e) => setTitle(e.target.value)}
+							className="flex-1"
+						/>
+						<Button type="submit">
+							<Plus className="mr-2 h-4 w-4" />
+							Adicionar
+						</Button>
+					</div>
+					{error && <p className="text-sm text-red-500">{error}</p>}
+				</form>
+			</CardContent>
+		</Card>
+	);
 };
-
-export default TaskForm;

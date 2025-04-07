@@ -9,8 +9,8 @@ import React from "react";
 
 import logo from "@/assets/logo.svg";
 
-import { AuthLoginContent } from "./components/auth-login-content";
-import { AuthRegisterContent } from "./components/auth-register-content";
+import { AuthLoginContent } from "./components/AuthLoginContent";
+import { AuthRegisterContent } from "./components/AuthRegisterContent";
 
 const AuthForm: React.FC = () => {
 	return (

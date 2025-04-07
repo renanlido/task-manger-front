@@ -5,13 +5,13 @@ import React, {
 	useEffect,
 	useState,
 } from "react";
-import { Task, TaskStatus } from "../types";
+import { Task, TaskStatus, TaskStatusEnum } from "../types";
 import { useAuth } from "./AuthContext";
 
 interface TaskContextType {
 	tasks: Task[];
 	filteredTasks: Task[];
-	filter: TaskStatus;
+	// filter: TaskStatus;
 	setFilter: (filter: TaskStatus) => void;
 	addTask: (title: string) => void;
 	toggleTaskStatus: (id: string) => void;
@@ -26,8 +26,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
 	const { user } = useAuth();
 	const [tasks, setTasks] = useState<Task[]>([]);
-	const [filter, setFilter] = useState<TaskStatus>("all");
-
+	const [filter, setFilter] = useState<TaskStatus>(TaskStatusEnum.ALL);
 	useEffect(() => {
 		if (user) {
 			const initialTasks: Task[] = [
@@ -96,7 +95,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 			value={{
 				tasks,
 				filteredTasks,
-				filter,
+				// filter,
 				setFilter,
 				addTask,
 				toggleTaskStatus,

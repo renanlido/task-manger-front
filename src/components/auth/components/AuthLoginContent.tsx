@@ -8,8 +8,8 @@ import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { AuthCardContent } from "./auth-card-content";
-import { AuthCardFooter } from "./auth-card-footer";
+import { AuthCardContent } from "./AuthCardContent";
+import { AuthCardFooter } from "./AuthCardFooter";
 
 export const AuthLoginContent = () => {
 	const { login } = useAuth();

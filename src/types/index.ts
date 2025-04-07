@@ -12,4 +12,11 @@ export interface Task {
   createdAt: string;
 }
 
-export type TaskStatus = 'pending' | 'completed' | 'all';
+
+export enum TaskStatusEnum {
+	ALL = 'all',
+	PENDING = 'pending',
+	COMPLETED = 'completed',
+}
+
+export type TaskStatus = TaskStatusEnum;

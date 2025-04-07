@@ -4,8 +4,8 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { AuthCardContent } from "./auth-card-content";
-import { AuthCardFooter } from "./auth-card-footer";
+import { AuthCardContent } from "./AuthCardContent";
+import { AuthCardFooter } from "./AuthCardFooter";
 
 export const AuthRegisterContent = () => {
 	const registerSchema = z
