@@ -5,7 +5,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import { z } from "zod";
 import { AuthCardContent } from "./AuthCardContent";
 import { AuthCardFooter } from "./AuthCardFooter";
@@ -69,13 +68,12 @@ export const AuthRegisterContent = () => {
 	});
 
 	const handleRegisterSubmit = async (data: z.infer<typeof registerSchema>) => {
-		console.log(data);
-		methods.reset();
-		toast.success("Conta criada com sucesso");
+		const response = await register(data.name, data.email, data.password);
 
-		await register(data.name, data.email, data.password);
-
-		navigate(from, { replace: true });
+		if (response.success) {
+			methods.reset();
+			navigate(from, { replace: true });
+		}
 	};
 	return (
 		<Form {...methods}>
@@ -91,6 +89,9 @@ export const AuthRegisterContent = () => {
 								</FormLabel>
 								<Input
 									type="text"
+									id="name"
+									data-testid="register-name"
+									className="register-name-input"
 									placeholder="Seu nome"
 									disabled={formState.isSubmitting}
 									{...field}
@@ -110,6 +111,9 @@ export const AuthRegisterContent = () => {
 								</FormLabel>
 								<Input
 									type="email"
+									id="email"
+									data-testid="register-email"
+									className="register-email-input"
 									placeholder="seu@email.com"
 									disabled={formState.isSubmitting}
 									{...field}
@@ -130,6 +134,9 @@ export const AuthRegisterContent = () => {
 								<Input
 									type="password"
 									placeholder="Sua senha"
+									id="password"
+									data-testid="register-password"
+									className="register-password-input"
 									disabled={formState.isSubmitting}
 									{...field}
 								/>
@@ -153,6 +160,9 @@ export const AuthRegisterContent = () => {
 									type="password"
 									placeholder="Confirme sua senha"
 									disabled={formState.isSubmitting}
+									id="confirm-password"
+									data-testid="register-confirm-password"
+									className="register-confirm-password-input"
 									{...field}
 								/>
 								<FormMessage />

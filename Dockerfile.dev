@@ -1,0 +1,15 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+
+RUN yarn install && npm install -g serve
+
+COPY . .
+
+RUN yarn build
+
+EXPOSE 5173
+
+CMD ["serve", "-s", "dist", "-l", "5173"]

@@ -21,7 +21,13 @@ export const Header: React.FC = () => {
 						<span className="hidden text-sm md:inline-block">
 							Olá, {user.name}
 						</span>
-						<Button variant="ghost" size="sm" onClick={logout}>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={logout}
+							data-testid="logout-button"
+							className="logout-button"
+						>
 							<LogOut className="mr-2 h-4 w-4" />
 							Sair
 						</Button>

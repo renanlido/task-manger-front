@@ -27,10 +27,18 @@ const AuthForm: React.FC = () => {
 				</CardHeader>
 				<Tabs defaultValue="login" className="w-full px-5">
 					<TabsList className="grid w-full grid-cols-2">
-						<TabsTrigger value="login" className="cursor-pointer">
+						<TabsTrigger
+							value="login"
+							className="auth-tab-login cursor-pointer"
+							data-testid="auth-tab-login"
+						>
 							Login
 						</TabsTrigger>
-						<TabsTrigger value="register" className="cursor-pointer">
+						<TabsTrigger
+							value="register"
+							className="auth-tab-register cursor-pointer"
+							data-testid="auth-tab-register"
+						>
 							Cadastro
 						</TabsTrigger>
 					</TabsList>

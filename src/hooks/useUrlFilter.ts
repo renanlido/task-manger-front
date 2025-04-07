@@ -1,4 +1,4 @@
-import { TaskStatus, TaskStatusEnum } from '@/types';
+import { TaskStatus } from '@/api/interfaces/task';
 import { useEffect } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ export function useUrlFilter({ setFilter }: UseUrlFilterProps) {
     if (urlFilter) {
       setFilter(urlFilter);
     } else if (location.search === "") {
-      setFilter(TaskStatusEnum.ALL);
+      setFilter(TaskStatus.ALL);
     }
   }, [location.search, searchParams, setFilter]);
 

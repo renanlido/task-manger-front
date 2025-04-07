@@ -15,7 +15,8 @@ export const AuthCardFooter = ({
 		<div className={cn("flex justify-center p-0 py-4", className)} {...props}>
 			<Button
 				type="submit"
-				className="w-full cursor-pointer"
+				className="auth-submit-button w-full cursor-pointer"
+				data-testid="auth-submit-button"
 				disabled={isLoading}
 			>
 				{children}

@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import { z } from "zod";
 import { AuthCardContent } from "./AuthCardContent";
 import { AuthCardFooter } from "./AuthCardFooter";
@@ -44,13 +43,12 @@ export const AuthLoginContent = () => {
 	});
 
 	const handleLoginSubmit = async (data: z.infer<typeof loginSchema>) => {
-		console.log(data);
-		methods.reset();
-		toast.success("Login realizado com sucesso");
+		const loginResponse = await login(data.email, data.password);
 
-		await login(data.email, data.password);
-
-		navigate(from, { replace: true });
+		if (loginResponse.success) {
+			methods.reset();
+			navigate(from, { replace: true });
+		}
 	};
 
 	return (
@@ -68,6 +66,8 @@ export const AuthLoginContent = () => {
 									</Label>
 									<Input
 										id="email"
+										data-testid="login-email"
+										className="login-email-input"
 										type="email"
 										placeholder="seu@email.com"
 										disabled={formState.isLoading}
@@ -85,13 +85,15 @@ export const AuthLoginContent = () => {
 								<div className="space-y-2">
 									<Label htmlFor="password" className="text-sm font-medium">
 										Senha
-									</Label>
+									</Label>{" "}
 									<Input
 										id="password"
 										type="password"
 										placeholder="Sua senha"
-										{...field}
+										data-testid="login-password"
+										className="login-password-input"
 										disabled={formState.isLoading}
+										{...field}
 									/>
 									<FormMessage />
 								</div>

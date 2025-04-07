@@ -1,54 +1,107 @@
-# React + TypeScript + Vite
+# Gerenciador de Tarefas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação web para gerenciamento de tarefas pessoais, construída com React, TypeScript e Vite.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Registro e autenticação de usuários
+- Criação, edição e exclusão de tarefas
+- Marcação de tarefas como concluídas
+- Filtro de tarefas por status (pendentes/concluídas)
+- Interface responsiva e amigável
 
-## Expanding the ESLint configuration
+## Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19
+- TypeScript
+- Vite
+- React Router Dom
+- React Hook Form + Zod
+- Tailwind CSS
+- Playwright (testes E2E)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Instalação e Execução
+
+### Usando Yarn
+
+```bash
+# Clonar o repositório
+git clone [url-do-repositorio]
+cd [nome-do-repositorio]
+
+# Instalar dependências
+yarn install
+
+# Executar em modo de desenvolvimento
+yarn dev
+
+# Construir para produção
+yarn build
+
+# Visualizar build de produção
+yarn preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Usando Docker
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+O projeto inclui configurações Docker para facilitar a execução em diferentes ambientes. Ambos os serviços constroem a aplicação e a servem usando o pacote `serve` na porta 5173.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+# Construir e executar em modo de produção (serviço app-dev)
+docker-compose up app-dev
+
+# Construir e executar em modo de produção (serviço app-prod)
+docker-compose up app-prod
 ```
+
+## Testes E2E
+
+Este projeto utiliza Playwright para testes end-to-end. Os testes cobrem as principais funcionalidades da aplicação:
+
+- Registro de usuário
+- Login com sucesso
+- Criação de nova tarefa
+- Marcar tarefa como concluída
+- Exclusão de tarefa
+- Filtro por status (pendente/concluída)
+- Bloqueio de acesso para rotas privadas sem autenticação
+- Validações de formulário
+
+Para executar os testes:
+
+```bash
+# Instalar os navegadores necessários para o Playwright
+npx playwright install
+
+# Executar todos os testes
+yarn test:e2e
+
+# Executar os testes com interface visual
+yarn test:e2e:ui
+
+# Executar os testes em modo de depuração
+yarn test:e2e:debug
+```
+
+Para mais detalhes sobre os testes, consulte a [documentação de testes](./e2e/README.md).
+
+## Estrutura do Projeto
+
+```
+├── e2e/                # Testes end-to-end com Playwright
+├── public/             # Arquivos públicos
+├── src/                # Código fonte
+│   ├── assets/         # Recursos estáticos (imagens, etc.)
+│   ├── components/     # Componentes React
+│   ├── contexts/       # Contextos React
+│   ├── hooks/          # Hooks personalizados
+│   ├── lib/            # Bibliotecas e utilitários
+│   ├── pages/          # Páginas da aplicação
+│   ├── routes/         # Configuração de rotas
+│   └── types/          # Definições de tipos TypeScript
+└── ...                 # Arquivos de configuração
+```
+
+## Licença
+
+MIT

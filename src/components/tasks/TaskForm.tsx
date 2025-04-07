@@ -2,25 +2,35 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useTask } from "@/contexts/TaskContext";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form, FormField, FormMessage } from "../ui/form";
 
 export const TaskForm: React.FC = () => {
 	const { addTask } = useTask();
-	const [title, setTitle] = useState("");
-	const [error, setError] = useState<string | null>(null);
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		setError(null);
+	const formSchema = z.object({
+		title: z.string().min(3, {
+			message: "Título deve conter pelo menos 3 caracteres",
+		}),
+		description: z.string().optional(),
+	});
 
-		if (!title.trim()) {
-			setError("Por favor, insira um título para a tarefa");
-			return;
-		}
+	const methods = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			title: "",
+		},
+	});
 
-		addTask(title.trim());
-		setTitle("");
+	const handleSubmit = (data: z.infer<typeof formSchema>) => {
+		console.log(data);
+
+		addTask(data.title, data.description);
+		methods.reset();
 	};
 
 	return (
@@ -29,21 +39,43 @@ export const TaskForm: React.FC = () => {
 				<CardTitle>Nova Tarefa</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-					<div className="flex gap-2">
-						<Input
-							placeholder="O que você precisa fazer?"
-							value={title}
-							onChange={(e) => setTitle(e.target.value)}
-							className="flex-1"
-						/>
-						<Button type="submit">
-							<Plus className="mr-2 h-4 w-4" />
-							Adicionar
-						</Button>
-					</div>
-					{error && <p className="text-sm text-red-500">{error}</p>}
-				</form>
+				<Form {...methods}>
+					<form
+						onSubmit={methods.handleSubmit(handleSubmit)}
+						className="flex flex-col gap-4"
+					>
+						<div className="flex gap-2">
+							<FormField
+								control={methods.control}
+								name="title"
+								render={({ field, formState }) => (
+									<div className="w-full space-y-2">
+										<Input
+											placeholder="O que você precisa fazer?"
+											className="task-title-input flex-1"
+											id="task-title"
+											data-testid="task-title-input"
+											aria-label="Título"
+											disabled={formState.isSubmitting}
+											{...field}
+										/>
+										<FormMessage />
+									</div>
+								)}
+							/>
+
+							<Button
+								type="submit"
+								className="add-task-button cursor-pointer"
+								data-testid="add-task-button"
+								disabled={methods.formState.isSubmitting}
+							>
+								<Plus className="mr-2 h-4 w-4" />
+								Adicionar Tarefa
+							</Button>
+						</div>
+					</form>
+				</Form>
 			</CardContent>
 		</Card>
 	);
