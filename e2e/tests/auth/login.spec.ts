@@ -18,7 +18,7 @@ test.describe('Login de usuário', () => {
     await page.getByTestId('register-name').fill(name);
     await page.getByTestId('register-email').fill(email);
     await page.getByTestId('register-password').fill(password);
-    await page.getByTestId('register-confirm-password').fill(password);(password);
+    await page.getByTestId('register-confirm-password').fill(password);
     
     // Clicar no botão de registro
     await page.getByTestId('auth-submit-button').click();
@@ -42,7 +42,10 @@ test.describe('Login de usuário', () => {
     });
     
     // Navegar para a página de login
-    await page.goto('/login');
+    await page.goto('/');
+    
+    // Garantir que estamos na aba de login
+    await page.getByTestId('auth-tab-login').click();
     
     // Preencher o formulário de login
     await page.getByTestId('login-email').fill(credentials.email);
@@ -50,6 +53,8 @@ test.describe('Login de usuário', () => {
     
     // Clicar no botão de login
     await page.getByTestId('auth-submit-button').click();
+
+    await page.waitForLoadState('networkidle');
     
     // Verificar se foi redirecionado para a página de tarefas
     await expect(page).toHaveURL(/\/tasks/);
@@ -61,7 +66,10 @@ test.describe('Login de usuário', () => {
   
   test('deve mostrar erro com credenciais inválidas', async ({ page }) => {
     // Navegar para a página de login
-    await page.goto('/login');
+    await page.goto('/');
+    
+    // Garantir que estamos na aba de login
+    await page.getByTestId('auth-tab-login').click();
     
     // Preencher o formulário com credenciais inválidas
     await page.getByTestId('login-email').fill('invalid@example.com');
@@ -71,21 +79,22 @@ test.describe('Login de usuário', () => {
     await page.getByTestId('auth-submit-button').click();
     
     // Verificar mensagem de erro para credenciais inválidas
-    await expect(page.getByTestId('auth-error-message')).toBeVisible();
-    await expect(page.getByTestId('auth-error-message')).toContainText('Credenciais inválidas');
+    await expect(page.getByText('Falha ao fazer login')).toBeVisible();
   });
   
   test('deve mostrar erro quando campos obrigatórios não são preenchidos', async ({ page }) => {
     // Navegar para a página de login
-    await page.goto('/login');
+    await page.goto('/');
+    
+    // Garantir que estamos na aba de login
+    await page.getByTestId('auth-tab-login').click();
     
     // Clicar no botão de login sem preencher os campos
     await page.getByTestId('auth-submit-button').click();
     
     // Verificar mensagens de erro para campos obrigatórios
-    await expect(page.getByTestId('login-email-error')).toBeVisible();
-    await expect(page.getByTestId('login-email-error')).toContainText('Email é obrigatório');
-    await expect(page.getByTestId('login-password-error')).toBeVisible();
-    await expect(page.getByTestId('login-password-error')).toContainText('Senha é obrigatória');
+    // As mensagens de erro são exibidas diretamente nos campos de formulário
+    await expect(page.getByText('Email inválido')).toBeVisible();
+    await expect(page.getByText('Senha deve conter pelo menos 8 caracteres')).toBeVisible();
   });
 });

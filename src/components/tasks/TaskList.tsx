@@ -21,14 +21,10 @@ export const TaskList: React.FC = () => {
 		updateFilterInUrl(value);
 	};
 
-	const { isLoading } = useQuery({
+	useQuery({
 		queryKey: ["tasks", filter],
 		queryFn: () => fetchTasks({ status: filter }),
 	});
-
-	if (isLoading) {
-		return <div>Carregando...</div>;
-	}
 
 	return (
 		<Card className="w-full">

@@ -18,7 +18,10 @@ export const Header: React.FC = () => {
 
 				{user && (
 					<div className="flex items-center gap-4">
-						<span className="hidden text-sm md:inline-block">
+						<span
+							className="hidden text-sm md:inline-block"
+							data-testid="user-name"
+						>
 							Olá, {user.name}
 						</span>
 						<Button
