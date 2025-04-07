@@ -35,7 +35,7 @@ test.describe('Proteção de rotas', () => {
     
     // Verificar se o conteúdo da página de tarefas está visível
     await expect(page.getByTestId('tasks-heading')).toBeVisible();
-    await expect(page.getByTestId('tasks-heading')).toContainText('Minhas Tarefas');
+    await expect(page.getByTestId('tasks-heading')).toContainText('Gerenciador de Tarefas');
   });
   
   test('deve manter o usuário na página de tarefas após recarregar a página', async ({ page }) => {
@@ -68,6 +68,6 @@ test.describe('Proteção de rotas', () => {
     // Verificar se continua na página de tarefas
     await expect(page).toHaveURL(/\/tasks/);
     await expect(page.getByTestId('tasks-heading')).toBeVisible();
-    await expect(page.getByTestId('tasks-heading')).toContainText('Minhas Tarefas');
+    await expect(page.getByTestId('tasks-heading')).toContainText('Gerenciador de Tarefas');
   });
 });

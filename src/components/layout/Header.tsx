@@ -9,7 +9,10 @@ export const Header: React.FC = () => {
 	const { user, logout } = useAuth();
 
 	return (
-		<header className="sticky top-0 z-10 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+		<header
+			className="sticky top-0 z-10 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950"
+			data-testid="tasks-heading"
+		>
 			<div className="container mx-auto flex items-center justify-between px-4 py-3">
 				<div className="flex items-center gap-2">
 					<img src={logo} alt="Logo" className="h-10 w-10" />
