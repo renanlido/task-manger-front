@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('Registro de usuu00e1rio', () => {
-  test('deve registrar um novo usuu00e1rio com sucesso', async ({ page }) => {
+  test('deve registrar um novo usuário com sucesso', async ({ page }) => {
     // Navegar para a pu00e1gina de registro
     await page.goto('/');
     
@@ -30,7 +30,7 @@ test.describe('Registro de usuu00e1rio', () => {
     await expect(page.getByTestId('user-name')).toContainText(name);
   });
   
-  test('deve mostrar erro quando campos obrigatu00f3rios nu00e3o su00e3o preenchidos', async ({ page }) => {
+  test('deve mostrar erro quando campos obrigatórios não são preenchidos', async ({ page }) => {
     // Navegar para a pu00e1gina de registro
     await page.goto('/');
     
@@ -42,16 +42,16 @@ test.describe('Registro de usuu00e1rio', () => {
     
     // Verificar mensagens de erro para campos obrigatu00f3rios
     await expect(page.getByTestId('register-name-error')).toBeVisible();
-    await expect(page.getByTestId('register-name-error')).toContainText('Nome u00e9 obrigatu00f3rio');
+    await expect(page.getByTestId('register-name-error')).toContainText('Nome deve conter pelo menos 3 caracteres');
     await expect(page.getByTestId('register-email-error')).toBeVisible();
-    await expect(page.getByTestId('register-email-error')).toContainText('Email u00e9 obrigatu00f3rio');
+    await expect(page.getByTestId('register-email-error')).toContainText('Email inválido');
     await expect(page.getByTestId('register-password-error')).toBeVisible();
-    await expect(page.getByTestId('register-password-error')).toContainText('Senha u00e9 obrigatu00f3ria');
+    await expect(page.getByTestId('register-password-error')).toContainText('Senha deve conter pelo menos 8 caracteres');
     await expect(page.getByTestId('register-confirm-password-error')).toBeVisible();
-    await expect(page.getByTestId('register-confirm-password-error')).toContainText('Confirmau00e7u00e3o de senha u00e9 obrigatu00f3ria');
+    await expect(page.getByTestId('register-confirm-password-error')).toContainText('Senha deve conter pelo menos 8 caracteres');
   });
   
-  test('deve mostrar erro quando as senhas nu00e3o coincidem', async ({ page }) => {
+  test('deve mostrar erro quando as senhas não coincidem', async ({ page }) => {
     // Navegar para a pu00e1gina de registro
     await page.goto('/');
     
@@ -68,7 +68,7 @@ test.describe('Registro de usuu00e1rio', () => {
     await page.getByTestId('auth-submit-button').click();
     
     // Verificar mensagem de erro para senhas que nu00e3o coincidem
-    await expect(page.getByTestId('register-password-match-error')).toBeVisible();
-    await expect(page.getByTestId('register-password-match-error')).toContainText('As senhas nu00e3o coincidem');
+    await expect(page.getByTestId('register-confirm-password-error')).toBeVisible();
+    await expect(page.getByTestId('register-confirm-password-error')).toContainText('As senhas não coincidem');
   });
 });

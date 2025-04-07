@@ -96,7 +96,7 @@ export const AuthRegisterContent = () => {
 									disabled={formState.isSubmitting}
 									{...field}
 								/>
-								<FormMessage />
+								<FormMessage data-testId="register-name-error" />
 							</div>
 						)}
 					/>
@@ -118,7 +118,7 @@ export const AuthRegisterContent = () => {
 									disabled={formState.isSubmitting}
 									{...field}
 								/>
-								<FormMessage />
+								<FormMessage data-testid="register-email-error" />
 							</div>
 						)}
 					/>
@@ -140,7 +140,7 @@ export const AuthRegisterContent = () => {
 									disabled={formState.isSubmitting}
 									{...field}
 								/>
-								<FormMessage />
+								<FormMessage data-testid="register-password-error" />
 							</div>
 						)}
 					/>
@@ -165,7 +165,7 @@ export const AuthRegisterContent = () => {
 									className="register-confirm-password-input"
 									{...field}
 								/>
-								<FormMessage />
+								<FormMessage data-testid="register-confirm-password-error" />
 							</div>
 						)}
 					/>
