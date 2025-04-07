@@ -1,20 +1,12 @@
-import React from "react";
-import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import { TaskProvider } from "./contexts/TaskContext";
-import AuthPage from "./pages/AuthPage";
-import { TasksPage } from "./pages/TasksPage";
-
-const AppContent: React.FC = () => {
-	const { isAuthenticated } = useAuth();
-
-	return isAuthenticated ? <TasksPage /> : <AuthPage />;
-};
+import { AppRoutes } from "./routes";
 
 function App() {
 	return (
 		<AuthProvider>
 			<TaskProvider>
-				<AppContent />
+				<AppRoutes />
 			</TaskProvider>
 		</AuthProvider>
 	);
